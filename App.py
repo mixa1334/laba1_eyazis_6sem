@@ -16,4 +16,6 @@ class App(tk.Tk):
 
 if __name__ == "__main__":
     app = App()
+    app.resizable(False, False)
+    app.minsize(1350, 900)
     app.mainloop()

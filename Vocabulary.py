@@ -63,3 +63,9 @@ class Vocabulary:
 
     def set_morphological_information(self, information):
         self.__morphological_information = dict(information)
+
+    def get_morphological_info_according_to_word(self, word):
+        return self.__morphological_information[word]
+
+    def size_of_vocabulary(self):
+        return len(self.__vocabulary.items())
