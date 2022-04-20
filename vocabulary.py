@@ -52,10 +52,10 @@ class Vocabulary:
     def edit_morphological_information(self, word, information):
         self.add_morphological_information(word, information)
 
-    def get_all_vocabulary(self):
+    def get_entire_vocabulary(self):
         return self.__vocabulary
 
-    def get_all_morphological_information(self):
+    def get_entire_morphological_information(self):
         return self.__morphological_information
 
     def set_vocabulary(self, vocabulary):
