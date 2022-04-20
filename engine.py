@@ -4,7 +4,7 @@ from string import punctuation
 import docx
 import pickle
 
-import vocabulary
+import Vocabulary
 
 
 def read_text_from_file(filename):
@@ -29,7 +29,7 @@ def read_vocabulary_from_file(filename):
 def preprocess_text(text):
     mystem = Mystem()
     text = text.lower()
-    result = vocabulary.Vocabulary()
+    result = Vocabulary.Vocabulary()
     words = list(filter(lambda val: val not in punctuation, word_tokenize(text)))
     lemmas = list(filter(lambda val: val != " " and val != "\n", mystem.lemmatize(" ".join(words))))
 

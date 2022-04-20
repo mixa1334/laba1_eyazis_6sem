@@ -1,4 +1,4 @@
-import vocabulary
+import Vocabulary
 import engine
 import pprint
 
@@ -13,7 +13,7 @@ def proc_and_save():
 
 def from_f():
     l = engine.read_vocabulary_from_file("info.pkl")
-    voc = vocabulary.Vocabulary()
+    voc = Vocabulary.Vocabulary()
     voc.set_vocabulary(l[0])
     voc.set_morphological_information(l[1])
     return voc
