@@ -10,6 +10,7 @@ class App(tk.Tk):
         self.title("Laba 1")
         voc = Vocabulary.Vocabulary()
         view = View.View(self)
+        view.pack()
         controller = Controller.Controller(voc, view)
         view.set_controller(controller)
 

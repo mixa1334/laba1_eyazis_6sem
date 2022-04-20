@@ -2,8 +2,9 @@ import tkinter as tk
 
 
 class Table(tk.Frame):
-    def __init__(self, voc, parent):
-        super().__init__(parent)
+    def __init__(self, parent, voc):
+        super(Table, self).__init__(parent)
+        self.__header()
         i = 1
         for lemma in voc.get_all_lemmas():
             self.__insert(i, 0, lemma)
@@ -15,13 +16,13 @@ class Table(tk.Frame):
                 i += 1
 
     def __insert(self, i, j, item):
-        entry = tk.Entry(self, width=20, fg='gray', font=('Arial', 16, ''))
+        entry = tk.Entry(self, width=20, fg='gray', font=('Arial', 11, ''))
         entry.grid(row=i, column=j)
         entry.insert(tk.END, item)
 
     def __header(self):
         header_words = ["Слово", "Кол-во вхождения", "Морфологическая информация"]
         for j in range(3):
-            entry = tk.Entry(self, width=20, bg='Black', fg='Black', font=('Arial', 16, 'bold'))
+            entry = tk.Entry(self, width=45, bg='White', fg='Black', font=('Arial', 12, 'bold'))
             entry.grid(row=0, column=j)
             entry.insert(tk.END, header_words[j])
