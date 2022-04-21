@@ -37,3 +37,10 @@ def preprocess_text(text):
         result.add_word_according_to_lemma(words[i], lemmas[i])
 
     return result
+
+
+def process_word_to_lemma(word):
+    mystem = Mystem()
+    word = word.lower()
+    lemma = mystem.lemmatize(word)
+    return lemma

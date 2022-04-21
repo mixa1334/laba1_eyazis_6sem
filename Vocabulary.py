@@ -45,11 +45,11 @@ class Vocabulary:
     def get_count_of_word(self, word, lemma):
         return self.__vocabulary[lemma][word]
 
+    def set_count_of_word(self, word, count, lemma):
+        self.__vocabulary[lemma][word] = count
+
     def add_morphological_information(self, word, information):
         self.__morphological_information[word] = list(information)
-
-    def edit_morphological_information(self, word, information):
-        self.add_morphological_information(word, information)
 
     def get_entire_vocabulary(self):
         return self.__vocabulary
@@ -64,7 +64,7 @@ class Vocabulary:
         self.__morphological_information = dict(information)
 
     def get_morphological_info_according_to_word(self, word):
-        return self.__morphological_information.get(word, "")
+        return self.__morphological_information.get(word, [""])
 
     def size_of_vocabulary(self):
         return len(self.__vocabulary.items())

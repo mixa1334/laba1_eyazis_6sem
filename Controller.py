@@ -29,3 +29,10 @@ class Controller:
         text = engine.read_text_from_file(filename)
         self.__voc = engine.preprocess_text(text)
         return self.__voc
+
+    def add_new_word_to_voc(self, word, count, morphological_info):
+        lemma = engine.process_word_to_lemma(word)
+        self.__voc.add_word_according_to_lemma(word, lemma)
+        self.__voc.set_count_of_word(word, count, lemma)
+        self.__voc.add_morphological_information(word, morphological_info)
+        return self.__voc
