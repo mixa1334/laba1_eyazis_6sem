@@ -36,3 +36,6 @@ class Controller:
         self.__voc.set_count_of_word(word, count, lemma)
         self.__voc.add_morphological_information(word, morphological_info)
         return self.__voc
+
+    def get_voc(self):
+        return self.__voc

@@ -54,6 +54,50 @@ class View(tk.Tk):
         return None
 
     def __command_edit_word(self):
+        words = sorted(self.__controller.get_voc().get_all_words())
+        if len(words) < 1:
+            messagebox.showerror("Редактирование", "Нет подходящих слов для редактирования")
+        else:
+            top = tk.Toplevel()
+            top.resizable(False, False)
+            top.title("Редактирование")
+            menu_choice = tk.StringVar()
+            menu_choice.set(words[0])
+            top.choice = menu_choice
+
+            drop = tk.OptionMenu(top, menu_choice, *words)
+            drop.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
+
+            l_count = tk.Label(top, text="Кол-во")
+            e_count = tk.Entry(top)
+            l_count.grid(row=1, column=0, pady=10, padx=10)
+            e_count.grid(row=1, column=1, pady=10, padx=10)
+            l_part_of_lang = tk.Label(top, text="Часть речи")
+            l_gen = tk.Label(top, text="Род")
+            l_number = tk.Label(top, text="Число")
+            l_padeJ = tk.Label(top, text="Падеж")
+            e_part_of_lang = tk.Entry(top)
+            e_gen = tk.Entry(top)
+            e_number = tk.Entry(top)
+            e_padeJ = tk.Entry(top)
+            l_part_of_lang.grid(row=2, column=0, pady=10, padx=10)
+            l_gen.grid(row=3, column=0, pady=10, padx=10)
+            l_number.grid(row=4, column=0, pady=10, padx=10)
+            l_padeJ.grid(row=5, column=0, pady=10, padx=10)
+            e_part_of_lang.grid(row=2, column=1, pady=10, padx=10)
+            e_gen.grid(row=3, column=1, pady=10, padx=10)
+            e_number.grid(row=4, column=1, pady=10, padx=10)
+            e_padeJ.grid(row=5, column=1, pady=10, padx=10)
+            top.count = e_count
+            top.part_of_lang = e_part_of_lang
+            top.gen = e_gen
+            top.number = e_number
+            top.padej = e_padeJ
+
+            submit = tk.Button(top, text="Изменить", command=lambda: self.__edit_words_process(top))
+            submit.grid(row=6, column=0, columnspan=2, pady=10, padx=10)
+
+    def __edit_words_process(self, top):
         return None
 
     def __command_new_word_to_voc(self):
