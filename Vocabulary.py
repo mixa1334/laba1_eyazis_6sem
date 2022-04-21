@@ -1,7 +1,12 @@
+import engine
+
+
 class Vocabulary:
     def __init__(self):
         self.__vocabulary = {}
         self.__morphological_information = {}
+        self.__do_filter = False
+        self.__filter_settings = []
 
     def __del__(self):
         del self.__vocabulary
@@ -40,8 +45,44 @@ class Vocabulary:
     def get_all_words_according_to_lemma(self, lemma):
         words = []
         for value in self.__vocabulary[lemma].keys():
-            words.append(value)
+            if bool(self.__filter_word(value, lemma)):
+                words.append(value)
         return words
+
+    def __filter_word(self, word, lemma):
+        if bool(self.__do_filter):
+            info = self.get_morphological_info_according_to_word(word)
+            count = int(self.get_count_of_word(word, lemma))
+            f_count = self.__filter_settings[0]
+            if f_count != "":
+                f_count = int(f_count)
+                if f_count != count:
+                    return False
+                else:
+                    print("oops")
+            if len(info) > 1:
+                f_part_of_lang = self.__filter_settings[1]
+                f_gen = self.__filter_settings[2]
+                f_number = self.__filter_settings[3]
+                f_padej = self.__filter_settings[4]
+                if f_part_of_lang != "":
+                    if f_part_of_lang != info[0]:
+                        return False
+                if f_gen != "":
+                    if f_gen != info[1]:
+                        return False
+                if f_number != "":
+                    if f_number != info[2]:
+                        return False
+                if f_padej != "":
+                    if f_padej != info[3]:
+                        return False
+            else:
+                if not bool(self.__filter_settings[5]):
+                    return False
+        else:
+            return True
+        return True
 
     def get_count_of_word(self, word, lemma):
         return self.__vocabulary[lemma][word]
@@ -69,3 +110,9 @@ class Vocabulary:
 
     def size_of_vocabulary(self):
         return len(self.__vocabulary.items())
+
+    def set_filter_settings(self, settings):
+        self.__filter_settings = list(settings)
+
+    def set_enable_filter(self, enable):
+        self.__do_filter = bool(enable)

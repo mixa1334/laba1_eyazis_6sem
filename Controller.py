@@ -6,6 +6,8 @@ class Controller:
     def __init__(self, voc, view):
         self.__voc = voc
         self.__view = view
+        self.__filter_set = []
+        self.__do_filter = False
 
     def save_vocabulary(self, filename):
         l = [self.__voc.get_entire_vocabulary(), self.__voc.get_entire_morphological_information()]
@@ -56,3 +58,10 @@ class Controller:
                     new_info.append("")
         self.__voc.add_morphological_information(word, new_info)
         return self.__voc
+
+    def set_filter_settings(self, setting):
+        print(list(setting))
+        self.__voc.set_filter_settings(list(setting))
+
+    def set_filter_enable(self, enable):
+        self.__voc.set_enable_filter(enable)

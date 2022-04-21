@@ -85,18 +85,30 @@ class View(tk.Tk):
         r_buttons = tk.IntVar()
         r_buttons.set(1)
         top.r_but = r_buttons
-        tk.Radiobutton(top, text="да", variable=r_buttons, value=1).grid(row=6, column=0, pady=10, padx=10)
-        tk.Radiobutton(top, text="нет", variable=r_buttons, value=2).grid(row=6, column=1, pady=10, padx=10)
+        tk.Radiobutton(top, text="да", variable=r_buttons, value=True).grid(row=6, column=0, pady=10, padx=10)
+        tk.Radiobutton(top, text="нет", variable=r_buttons, value=False).grid(row=6, column=1, pady=10, padx=10)
 
         submit = tk.Button(top, text="Применить", command=lambda: self.__process_filter_button(top))
         submit.grid(row=7, column=0, columnspan=2, pady=10, padx=10)
-        reset = tk.Button(top, text="Сбросить изменения", command=self.__reset_filter)
+        reset = tk.Button(top, text="Сбросить изменения", command=lambda: self.__reset_filter(top))
         reset.grid(row=8, column=0, columnspan=2, pady=10, padx=10)
 
     def __process_filter_button(self, top):
-        return None
+        settings = [top.count.get(),
+                    top.part_of_lang.get(),
+                    top.gen.get(),
+                    top.number.get(),
+                    top.padej.get(),
+                    top.r_but.get()]
+        top.destroy()
+        self.__controller.set_filter_settings(settings)
+        self.__controller.set_filter_enable(True)
+        voc = self.__controller.get_voc()
+        self.__set_content_table(voc)
 
-    def __reset_filter(self):
+    def __reset_filter(self, top):
+        top.destroy()
+        self.__controller.set_filter_enable(False)
         voc = self.__controller.get_voc()
         self.__set_content_table(voc)
 
