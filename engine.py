@@ -16,7 +16,7 @@ def read_text_from_file(filename):
 
 
 def write_vocabulary_to_file(voc, filename):
-    with open(filename, "wb") as file:
+    with open(filename + ".pkl", "wb") as file:
         pickle.dump(voc, file)
 
 

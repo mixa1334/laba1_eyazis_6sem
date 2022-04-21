@@ -12,6 +12,7 @@ class Controller:
         engine.write_vocabulary_to_file(l, filename)
 
     def open_vocabulary(self, filename):
+        del self.__voc
         l = engine.read_vocabulary_from_file(filename)
         self.__voc = Vocabulary.Vocabulary()
         self.__voc.set_vocabulary(l[0])
@@ -19,10 +20,12 @@ class Controller:
         return self.__voc
 
     def create_empty(self):
+        del self.__voc
         self.__voc = Vocabulary.Vocabulary()
         return self.__voc
 
     def create_from_doc(self, filename):
+        del self.__voc
         text = engine.read_text_from_file(filename)
         self.__voc = engine.preprocess_text(text)
         return self.__voc
