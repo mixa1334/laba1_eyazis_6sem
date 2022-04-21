@@ -27,7 +27,7 @@ class Vocabulary:
             del self.__vocabulary[lemma][word]
 
     def get_all_lemmas(self):
-        return self.__vocabulary.keys()
+        return sorted(self.__vocabulary.keys())
 
     def get_all_words(self):
         words = []
@@ -38,9 +38,8 @@ class Vocabulary:
 
     def get_all_words_according_to_lemma(self, lemma):
         words = []
-        for value in self.__vocabulary[lemma]:
-            for word in value:
-                words.append(word)
+        for value in self.__vocabulary[lemma].keys():
+            words.append(value)
         return words
 
     def get_count_of_word(self, word, lemma):
@@ -65,7 +64,7 @@ class Vocabulary:
         self.__morphological_information = dict(information)
 
     def get_morphological_info_according_to_word(self, word):
-        return self.__morphological_information[word]
+        return self.__morphological_information.get(word, "")
 
     def size_of_vocabulary(self):
         return len(self.__vocabulary.items())

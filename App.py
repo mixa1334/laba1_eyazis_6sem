@@ -1,22 +1,22 @@
-import tkinter as tk
 import Vocabulary
 import Controller
 import View
 
 
-class App(tk.Tk):
+class App:
     def __init__(self):
-        super(App, self).__init__()
-        self.title("Laba 1")
         voc = Vocabulary.Vocabulary()
-        view = View.View(self)
-        view.pack()
+        view = View.View()
         controller = Controller.Controller(voc, view)
         view.set_controller(controller)
+        self.__voc = voc
+        self.__view = view
+        self.__controller = controller
+
+    def start(self):
+        self.__view.mainloop()
 
 
 if __name__ == "__main__":
     app = App()
-    app.resizable(False, False)
-    app.minsize(1350, 900)
-    app.mainloop()
+    app.start()
