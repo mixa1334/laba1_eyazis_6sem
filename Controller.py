@@ -65,3 +65,6 @@ class Controller:
 
     def set_filter_enable(self, enable):
         self.__voc.set_enable_filter(enable)
+
+    def save_as_doc(self, filename):
+        engine.write_text_to_file(filename, self.__voc)

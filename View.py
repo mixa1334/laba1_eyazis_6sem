@@ -45,7 +45,65 @@ class View(tk.Tk):
         return None
 
     def __command_save_as_doc(self):
-        return None
+        top = tk.Toplevel()
+        top.resizable(False, False)
+        top.title("Задокументировать")
+        l_count = tk.Label(top, text="Кол-во")
+        e_count = tk.Entry(top)
+        l_count.grid(row=0, column=0, pady=10, padx=10)
+        e_count.grid(row=0, column=1, pady=10, padx=10)
+        l_part_of_lang = tk.Label(top, text="Часть речи")
+        l_gen = tk.Label(top, text="Род")
+        l_number = tk.Label(top, text="Число")
+        l_padeJ = tk.Label(top, text="Падеж")
+        e_part_of_lang = tk.Entry(top)
+        e_gen = tk.Entry(top)
+        e_number = tk.Entry(top)
+        e_padeJ = tk.Entry(top)
+        l_part_of_lang.grid(row=1, column=0, pady=10, padx=10)
+        l_gen.grid(row=2, column=0, pady=10, padx=10)
+        l_number.grid(row=3, column=0, pady=10, padx=10)
+        l_padeJ.grid(row=4, column=0, pady=10, padx=10)
+        e_part_of_lang.grid(row=1, column=1, pady=10, padx=10)
+        e_gen.grid(row=2, column=1, pady=10, padx=10)
+        e_number.grid(row=3, column=1, pady=10, padx=10)
+        e_padeJ.grid(row=4, column=1, pady=10, padx=10)
+        top.count = e_count
+        top.part_of_lang = e_part_of_lang
+        top.gen = e_gen
+        top.number = e_number
+        top.padej = e_padeJ
+
+        l_morph_format_info = tk.Label(top, text="Включать слова с неформатированным вводом?")
+        l_morph_format_info.grid(row=5, column=0, columnspan=2, padx=10, pady=10)
+        r_buttons = tk.IntVar()
+        r_buttons.set(1)
+        top.r_but = r_buttons
+        tk.Radiobutton(top, text="да", variable=r_buttons, value=True).grid(row=6, column=0, pady=10, padx=10)
+        tk.Radiobutton(top, text="нет", variable=r_buttons, value=False).grid(row=6, column=1, pady=10, padx=10)
+
+        l_filename = tk.Label(top, text="Имя файла")
+        l_filename.grid(row=7, column=0, padx=10, pady=10)
+        e_filename = tk.Entry(top)
+        e_filename.grid(row=7, column=1, padx=10, pady=10)
+        top.filename = e_filename
+
+        submit = tk.Button(top, text="Задокуметировать", command=lambda: self.__process_save_as_doc(top))
+        submit.grid(row=8, column=0, columnspan=2, pady=10, padx=10)
+
+    def __process_save_as_doc(self, top):
+        settings = [top.count.get(),
+                    top.part_of_lang.get(),
+                    top.gen.get(),
+                    top.number.get(),
+                    top.padej.get(),
+                    top.r_but.get()]
+        fname = top.filename.get()
+        top.destroy()
+        self.__controller.set_filter_settings(settings)
+        self.__controller.set_filter_enable(True)
+        self.__controller.save_as_doc(fname)
+        self.__controller.set_filter_enable(False)
 
     def __command_find_by(self):
         top = tk.Toplevel()

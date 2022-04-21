@@ -15,6 +15,23 @@ def read_text_from_file(filename):
     return "\n".join(text)
 
 
+def write_text_to_file(filename, voc):
+    doc_file = docx.Document()
+    doc_file.add_heading("Словарь", 1)
+    for lemma in voc.get_all_lemmas():
+        doc_file.add_paragraph("---------------------------------------------------------------------------------")
+        p = doc_file.add_paragraph()
+        runner = p.add_run("Лексема -> " + str(lemma))
+        runner.bold = True
+        for word in voc.get_all_words_according_to_lemma(lemma):
+            info = voc.get_morphological_info_according_to_word(word)
+            word_text = "\tсловоформа -> " + str(word) + ", кол-во вхождения в текст -> " + str(
+                voc.get_count_of_word(word, lemma)) + " доп информация -> часть речи: " + str(
+                info[0]) + ", род: " + str(info[1]) + ", число: " + str(info[2]) + ", пажед: " + str(info[3])
+            doc_file.add_paragraph(word_text)
+    doc_file.save(filename + ".doc")
+
+
 def write_vocabulary_to_file(voc, filename):
     with open(filename + ".pkl", "wb") as file:
         pickle.dump(voc, file)
