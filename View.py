@@ -68,6 +68,8 @@ class View(tk.Tk):
         l_count.grid(row=0, column=1, pady=10, padx=10)
         e_word.grid(row=1, column=0, pady=10, padx=10)
         e_count.grid(row=1, column=1, pady=10, padx=10)
+        top.word = e_word
+        top.count = e_count
 
         format_frame = tk.Frame(top)
         l_part_of_lang = tk.Label(format_frame, text="Часть речи")
@@ -97,12 +99,14 @@ class View(tk.Tk):
         e_str_input = tk.Entry(own_format_str)
         l_str_input.grid(row=0, column=0)
         e_str_input.grid(row=1, column=0)
+        own_format_str.str_input = e_str_input
 
         top.format_frame = format_frame
         top.own_format = own_format_str
 
         r_buttons = tk.IntVar()
         r_buttons.set(1)
+        top.r_but = r_buttons
         tk.Radiobutton(top, text="Форматированный ввод", variable=r_buttons, value=1,
                        command=lambda: self.__change_new_word_input(r_buttons.get(), top)).grid(row=2, column=0,
                                                                                                 pady=10,
@@ -115,7 +119,18 @@ class View(tk.Tk):
         b_add.grid(row=4, column=0, columnspan=2)
 
     def __add_new_word_process(self, top):
-        return None
+        word = top.word.get()
+        count = top.count.get()
+        if top.r_but.get() == 1:
+            morphological_info = [top.format_frame.part_of_lang.get(),
+                                  top.format_frame.gen.get(),
+                                  top.format_frame.number.get(),
+                                  top.format_frame.padeJ.get()]
+        else:
+            morphological_info = top.own_format.str_input.get()
+        top.destroy()
+        voc = self.__controller.add_new_word_to_voc(word, count, morphological_info)
+        self.__set_content_table(voc)
 
     def __change_new_word_input(self, value, top):
         if value == 1:
