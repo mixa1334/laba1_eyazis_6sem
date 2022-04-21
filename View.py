@@ -22,7 +22,7 @@ class View(tk.Tk):
         save_button.grid(row=0, column=1)
         create_empty_voc = tk.Button(menu_frame, text="создать пустой", command=self.__command_create_empty)
         create_empty_voc.grid(row=0, column=2)
-        create_from_doc = tk.Button(menu_frame, text="создать из словоря", command=self.__command_create_from_doc)
+        create_from_doc = tk.Button(menu_frame, text="создать из doc", command=self.__command_create_from_doc)
         create_from_doc.grid(row=0, column=3)
         add_new_item = tk.Button(menu_frame, text="добавить словоформу", command=self.__command_new_word_to_voc)
         add_new_item.grid(row=0, column=4)
@@ -42,7 +42,21 @@ class View(tk.Tk):
         self.__set_content_table(Vocabulary.Vocabulary())
 
     def __command_user_info(self):
-        return None
+        user_guid = """
+        открыть - выбрав подходящий файл можно загрузить словарь\n
+        сохранить - набрав имя файла его можно сохранить\n
+        создать пустой - создание пустого словаря\n
+        создать из doc - помогает созать словарь по имеющемуся doc файлу\n
+        добавить словоформу - введя все необходимые параметры можно создать новую словоформу в словаре\n
+        редактировать словоформу - необходимо выбрать нужную форму и отредактировать интересующие поля\n
+        фильтрация - возможность включить и отключить фильтры по необходимым критериям\n
+        поиск - поиск по заданным критериям\n
+        документирование - сохранения словаря в документированном виде в файле типа doc\n
+        """
+        top = tk.Toplevel()
+        top.resizable(False, False)
+        top.title("Информация")
+        tk.Label(top, text=user_guid).grid(row=0, column=0, padx=10, pady=10)
 
     def __command_save_as_doc(self):
         top = tk.Toplevel()
@@ -354,7 +368,7 @@ class View(tk.Tk):
                                   top.format_frame.number.get(),
                                   top.format_frame.padeJ.get()]
         else:
-            morphological_info = top.own_format.str_input.get()
+            morphological_info = [top.own_format.str_input.get()]
         top.destroy()
         voc = self.__controller.add_new_word_to_voc(word, count, morphological_info)
         self.__set_content_table(voc)
