@@ -33,7 +33,11 @@ class Vocabulary:
             del self.__vocabulary[lemma][word]
 
     def get_all_lemmas(self):
-        return sorted(self.__vocabulary.keys())
+        lemmas = []
+        for lem in sorted(self.__vocabulary.keys()):
+            if len(self.get_all_words_according_to_lemma(lem)) > 0:
+                lemmas.append(lem)
+        return lemmas
 
     def get_all_words(self):
         words = []
@@ -58,8 +62,6 @@ class Vocabulary:
                 f_count = int(f_count)
                 if f_count != count:
                     return False
-                else:
-                    print("oops")
             if len(info) > 1:
                 f_part_of_lang = self.__filter_settings[1]
                 f_gen = self.__filter_settings[2]
