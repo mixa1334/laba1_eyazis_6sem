@@ -51,7 +51,54 @@ class View(tk.Tk):
         return None
 
     def __command_filter_table(self):
+        top = tk.Toplevel()
+        top.resizable(False, False)
+        top.title("Фильтр")
+        l_count = tk.Label(top, text="Кол-во")
+        e_count = tk.Entry(top)
+        l_count.grid(row=0, column=0, pady=10, padx=10)
+        e_count.grid(row=0, column=1, pady=10, padx=10)
+        l_part_of_lang = tk.Label(top, text="Часть речи")
+        l_gen = tk.Label(top, text="Род")
+        l_number = tk.Label(top, text="Число")
+        l_padeJ = tk.Label(top, text="Падеж")
+        e_part_of_lang = tk.Entry(top)
+        e_gen = tk.Entry(top)
+        e_number = tk.Entry(top)
+        e_padeJ = tk.Entry(top)
+        l_part_of_lang.grid(row=1, column=0, pady=10, padx=10)
+        l_gen.grid(row=2, column=0, pady=10, padx=10)
+        l_number.grid(row=3, column=0, pady=10, padx=10)
+        l_padeJ.grid(row=4, column=0, pady=10, padx=10)
+        e_part_of_lang.grid(row=1, column=1, pady=10, padx=10)
+        e_gen.grid(row=2, column=1, pady=10, padx=10)
+        e_number.grid(row=3, column=1, pady=10, padx=10)
+        e_padeJ.grid(row=4, column=1, pady=10, padx=10)
+        top.count = e_count
+        top.part_of_lang = e_part_of_lang
+        top.gen = e_gen
+        top.number = e_number
+        top.padej = e_padeJ
+
+        l_morph_format_info = tk.Label(top, text="Включать слова с неформатированным вводом?")
+        l_morph_format_info.grid(row=5, column=0, columnspan=2, padx=10, pady=10)
+        r_buttons = tk.IntVar()
+        r_buttons.set(1)
+        top.r_but = r_buttons
+        tk.Radiobutton(top, text="да", variable=r_buttons, value=1).grid(row=6, column=0, pady=10, padx=10)
+        tk.Radiobutton(top, text="нет", variable=r_buttons, value=2).grid(row=6, column=1, pady=10, padx=10)
+
+        submit = tk.Button(top, text="Применить", command=lambda: self.__process_filter_button(top))
+        submit.grid(row=7, column=0, columnspan=2, pady=10, padx=10)
+        reset = tk.Button(top, text="Сбросить изменения", command=self.__reset_filter)
+        reset.grid(row=8, column=0, columnspan=2, pady=10, padx=10)
+
+    def __process_filter_button(self, top):
         return None
+
+    def __reset_filter(self):
+        voc = self.__controller.get_voc()
+        self.__set_content_table(voc)
 
     def __command_edit_word(self):
         words = sorted(self.__controller.get_voc().get_all_words())
@@ -98,7 +145,12 @@ class View(tk.Tk):
             submit.grid(row=6, column=0, columnspan=2, pady=10, padx=10)
 
     def __edit_words_process(self, top):
-        return None
+        info = [top.part_of_lang.get(), top.gen.get(), top.number.get(), top.padej.get()]
+        count = top.count.get()
+        word = top.choice.get()
+        top.destroy()
+        voc = self.__controller.edit_word_in_voc(word, count, info)
+        self.__set_content_table(voc)
 
     def __command_new_word_to_voc(self):
         top = tk.Toplevel()

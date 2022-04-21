@@ -21,6 +21,7 @@ class Vocabulary:
                 self.__vocabulary[lemma][word] = 1
         else:
             self.__vocabulary[lemma] = {word: 1}
+        self.add_morphological_information(word, [""])
 
     def delete_word_according_to_lemma(self, word, lemma):
         if lemma in self.__vocabulary:
