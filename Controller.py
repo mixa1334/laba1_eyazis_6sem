@@ -60,7 +60,6 @@ class Controller:
         return self.__voc
 
     def set_filter_settings(self, setting):
-        print(list(setting))
         self.__voc.set_filter_settings(list(setting))
 
     def set_filter_enable(self, enable):

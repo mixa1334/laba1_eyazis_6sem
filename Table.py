@@ -17,7 +17,10 @@ class Table:
             l_row = (lemma, "", "")
             table.insert('', tk.END, values=l_row)
             for word in voc.get_all_words_according_to_lemma(lemma):
-                w_row = (word, voc.get_count_of_word(word, lemma), voc.get_morphological_info_according_to_word(word))
+                morph_info = voc.get_morphological_info_according_to_word(word)
+                w_row = (
+                    word, voc.get_count_of_word(word, lemma), str(morph_info[0]) + " " + str(morph_info[1]) + " " +
+                    str(morph_info[2]) + " " + str(morph_info[3]) + " ")
                 table.insert('', tk.END, values=w_row)
 
         scroll_pane = ttk.Scrollbar(parent, command=table.yview)
